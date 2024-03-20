@@ -29,16 +29,16 @@ def process_text(text):
     for i in range(len(text)):
         if i>2:
             if text[i] in list(alpha2num.keys()):
-                final_text  = final_text + f"{alpha2num[text[i]]} "
+                final_text  = final_text + f"{alpha2num[text[i]]}"
             else:
-                final_text = final_text + f"{text[i]} "
+                final_text = final_text + f"{text[i]}"
                 
 
         else:
             if text[i] in num2alpha:
-                final_text = final_text + f"{num2alpha[text[i]]} "
+                final_text = final_text + f"{num2alpha[text[i]]}"
             else:
-                final_text = final_text + f"{text[i]} "
+                final_text = final_text + f"{text[i]}"
                 
     return final_text.strip()    
 
@@ -48,18 +48,14 @@ def draw_plate_num(image, text, bounding_box, font_scale=0.5, font_thickness=1):
     x1, y1, x2, y2 = bounding_box
     
     # Calculate font size based on bounding box size
-    font_scale = max((x2 - x1) * font_scale, 0.5)
     
     font = cv2.FONT_HERSHEY_SIMPLEX
-    
-    # Calculate text size
-    (text_width, text_height), _ = cv2.getTextSize(text, font, font_scale, font_thickness)
-    
+        
     # Calculate text position
-    text_x = x1 + (x2 - x1 - text_width) // 2
-    text_y = y1 - 10  # Adjust for positioning
+    text_x = x1 - (abs(x2 - x1)) // 2
+    text_y = y1 - 20 # Adjust for positioning
         
     # Draw text
     # cv2.putText(image, text, (text_x, text_y), font, font_scale, (0, 255, 0), font_thickness)
-    cv2.putText(image, text, (text_x, text_y), font, 0.5, (0,255,0))
+    cv2.putText(image, text, (text_x, text_y), font, 1.5, (0,255,0), 2)
         
