@@ -13,15 +13,20 @@ def ocr(crop, mocr):
     
     text = mocr(image)
     
+    
     return text
     
     
 def process_text(text):
     
-    text = text.replace(" ", "")
-    text = [chr(ord(i)-65248) for i in text]
-    text = "".join(text)
-    final_text = ""
+    try:
+        text = text.replace(" ", "")
+
+        text = [chr(ord(i)-65248) for i in text]
+        text = "".join(text)
+        final_text = ""
+    except:
+        return ""
     
     alpha2num = {"C":"0", "O":"0", "I":"1", "D":"0", "S":"5"}
     num2alpha = {"0":"O", "1":"I", "5":"S"}
@@ -40,7 +45,7 @@ def process_text(text):
             else:
                 final_text = final_text + f"{text[i]}"
                 
-    return final_text.strip()    
+    return final_text.replace("-", "")    
 
 
 def draw_plate_num(image, text, bounding_box, font_scale=0.5, font_thickness=1):
