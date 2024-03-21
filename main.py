@@ -3,13 +3,21 @@ import cv2
 from manga_ocr import MangaOcr
 import util
 from collections import Counter
+import argparse
+
+parser = argparse.ArgumentParser(description="Real-Time ALPR (Automatic License Plate Recognition)")
+parser.add_argument("--video", required=True, help="Path to the input video file")
+
+# Parse the command-line arguments
+args = parser.parse_args()
+
 
 
 
 detector = Detector("models/YOLOv8/weights/best.pt")
 mocr = MangaOcr()
 
-input_video_path = 'input/car.MOV'
+input_video_path = args.video
 file_name = input_video_path.split("/")[-1].split(".")[0]
 output_video_path = f"output/{file_name}_output.mp4"
 
