@@ -1,4 +1,4 @@
-from models.YOLOv8.detection import Detector
+from detection.detection import Detector
 import cv2
 from manga_ocr import MangaOcr
 import util
@@ -14,7 +14,7 @@ args = parser.parse_args()
 
 
 
-detector = Detector("models/YOLOv8/weights/best.pt")
+detector = Detector("detection/models/YOLOv8/weights/best.pt")
 mocr = MangaOcr()
 
 input_video_path = args.video
@@ -54,7 +54,6 @@ while True:
         out.write(frame)
         continue
     
-    cv2.imwrite("crop.jpg", crop)
     text = util.ocr(crop, mocr)
     processed_text = util.process_text(text)
     if len(processed_text) == 6:
