@@ -51,7 +51,8 @@ The output will be an annotated video with detected license plates and recognize
 
 ## Example
 
-[Add a GIF or a link to a video demonstrating the project in action]
+![Example GIF](./assets/car_output.gif)
+
 
 ## Acknowledgments
 
