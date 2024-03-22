@@ -62,5 +62,5 @@ def draw_plate_num(image, text, bounding_box, font_scale=0.5, font_thickness=1):
         
     # Draw text
     # cv2.putText(image, text, (text_x, text_y), font, font_scale, (0, 255, 0), font_thickness)
-    cv2.putText(image, text, (text_x, text_y), font, 1.5, (0,255,0), 3)
+    cv2.putText(image, text, (text_x, text_y), font, 1.5, (150,75,0), 3)
         

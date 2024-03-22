@@ -63,6 +63,7 @@ while True:
     if len(predictions)>5:
         if len(processed_text)!=6:
             processed_text = counter.most_common(1)[0][0]
+            
     if processed_text != "":
         util.draw_plate_num(drawn_img, processed_text, box)
 
