@@ -3,10 +3,12 @@ import cv2
 from manga_ocr import MangaOcr
 import util
 from collections import Counter
+import time
 import argparse
 
 parser = argparse.ArgumentParser(description="Real-Time ALPR (Automatic License Plate Recognition)")
-parser.add_argument("--video", required=True, help="Path to the input video file")
+parser.add_argument("--mode",default="v", required=False, help="'c' for webcam mode")
+parser.add_argument("--video",default="./", required=True, help="Path to the input video file")
 
 # Parse the command-line arguments
 args = parser.parse_args()
@@ -17,15 +19,25 @@ args = parser.parse_args()
 detector = Detector("detection/models/YOLOv8/weights/best.pt")
 mocr = MangaOcr()
 
-input_video_path = args.video
-file_name = input_video_path.split("/")[-1].split(".")[0]
-output_video_path = f"output/{file_name}_output.mp4"
 
-# Open video file
-video_capture = cv2.VideoCapture(input_video_path)  # Replace 'video_file.mp4' with your video file
-cv2.namedWindow("drawn_image", cv2.WINDOW_KEEPRATIO)
+if args.mode != "c":
+    input_video_path = args.video
+    file_name = input_video_path.split("/")[-1].split(".")[0]
+    output_video_path = f"output/{file_name}_output.mp4"
 
+    # Open video file
+    video_capture = cv2.VideoCapture(input_video_path)  # Replace 'video_file.mp4' with your video file
+    cv2.namedWindow("drawn_image", cv2.WINDOW_KEEPRATIO)
 
+else:
+    video_capture = cv2.VideoCapture(0)
+    
+    if not video_capture.isOpened():
+        print("Error opening camera")
+        exit()
+
+    output_video_path = "output/output.mp4"
+    
 ret, first_frame = video_capture.read()
 # Check if the frame was read successfully
 if not ret:
@@ -51,13 +63,18 @@ while True:
     
     if not detected:
         cv2.imshow("drawn_image", frame)
+        # time.sleep(0.1)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
         out.write(frame)
+
         continue
     
     text = util.ocr(crop, mocr)
     processed_text = util.process_text(text)
     if len(processed_text) == 6:
-        predictions.append(processed_text)
+        # predictions.append(processed_text)
+        util.append_with_limit(predictions, processed_text, 10)
         counter.update(predictions)
         
     if len(predictions)>5:
@@ -72,6 +89,7 @@ while True:
     out.write(drawn_img)
     # cv2.imshow("drawn", crop)
     # cv2.waitKey(0)
+    
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
     
