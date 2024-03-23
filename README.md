@@ -33,6 +33,8 @@ Real-Time ALPR (Automatic License Plate Recognition) is a project aimed at detec
 
 ## Usage
 
+### Using a Video File
+
 1. Prepare your video for processing.
 
 2. Run the main script:
@@ -45,6 +47,15 @@ Real-Time ALPR (Automatic License Plate Recognition) is a project aimed at detec
 
 3. The script will process the video, detect license plates, and recognize the plate numbers in real-time.
 
+### Using a Camera
+
+1. Run the main script with the `--mode c` option:
+
+    ```bash
+    python main.py --mode c --cam <camera_number> --video "./"
+    ```
+    _Use --cam only if you have multiple cameras connected._<br><br>
+    This will start capturing video from your camera, detect license plates, and recognize the plate numbers in real-time.
 ## Output
 
 The output will be an annotated video with detected license plates and recognized plate numbers. You can find the output video in the `output` directory.
