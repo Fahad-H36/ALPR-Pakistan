@@ -9,6 +9,7 @@ import argparse
 parser = argparse.ArgumentParser(description="Real-Time ALPR (Automatic License Plate Recognition)")
 parser.add_argument("--mode",default="v", required=False, help="'c' for webcam mode")
 parser.add_argument("--video",default="./", required=True, help="Path to the input video file")
+parser.add_argument("--cam",default="0", required=True, help="0 for default camera (i.e., laptop camera). 1 if you have different camera connected")
 
 # Parse the command-line arguments
 args = parser.parse_args()
@@ -30,7 +31,12 @@ if args.mode != "c":
     cv2.namedWindow("drawn_image", cv2.WINDOW_KEEPRATIO)
 
 else:
-    video_capture = cv2.VideoCapture(0)
+    try:
+        cam_no = int(args.cam)
+        video_capture = cv2.VideoCapture(0)
+    except Exception as e:
+        print("Invalid camera option passed")
+        exit()
     
     if not video_capture.isOpened():
         print("Error opening camera")

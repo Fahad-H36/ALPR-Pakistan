@@ -67,5 +67,5 @@ def draw_plate_num(image, text, bounding_box, font_scale=0.5, font_thickness=1):
 def append_with_limit(lst, item, limit):
     lst.append(item)  # Append the new item to the list
     if len(lst) > limit:
-        lst.pop(0) 
+        lst.pop(0)
         
