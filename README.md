@@ -45,7 +45,7 @@ Real-Time ALPR (Automatic License Plate Recognition) is a project aimed at detec
 
     Replace `path_to_your_video.mp4` with the path to your video file.
 
-3. The script will process the video, detect license plates, and recognize the plate numbers in real-time.
+   The script will process the video, detect license plates, and recognize the plate numbers in real-time.
 
 ### Using a Camera
 
